@@ -11,6 +11,14 @@ describe Pact do
     end
   end
 
+  describe ".clear_world" do
+    it "clears the world" do
+      original_world = Pact.world
+      Pact.clear_world
+      expect(original_world).to_not be Pact.world
+    end
+  end
+
 end
 
 module Pact

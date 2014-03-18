@@ -4,6 +4,11 @@ module Pact
     @world ||= Pact::Provider::World.new
   end
 
+  # internal api, for testing only
+  def self.clear_world
+    @world = nil
+  end
+
   module Provider
     class World
 

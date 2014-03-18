@@ -9,7 +9,10 @@ module Pact::Provider
 
     PROVIDER_STATE_MESSAGES = []
 
-    before :all do
+    before do
+      PROVIDER_STATE_MESSAGES.clear
+      Pact.clear_world
+
       Pact.base_provider_state do
         set_up do
           PROVIDER_STATE_MESSAGES << :global_base_set_up
@@ -42,10 +45,6 @@ module Pact::Provider
         end
 
       end
-    end
-
-    before do
-      PROVIDER_STATE_MESSAGES.clear
     end
 
     describe "set_up_provider_state" do
