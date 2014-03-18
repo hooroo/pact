@@ -16,6 +16,10 @@ module Pact
         provider_state
       end
 
+      def get_base options = {}
+        ProviderStates.get_base options
+      end
+
       private
 
       def error_message name, consumer

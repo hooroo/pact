@@ -34,6 +34,8 @@ module Pact
       end
 
       def set_up_provider_state provider_state_name, consumer
+        get_base.set_up
+        get_base(consumer).set_up
         if provider_state_name
           get_provider_state(provider_state_name, consumer).set_up
         end
@@ -43,10 +45,16 @@ module Pact
         if provider_state_name
           get_provider_state(provider_state_name, consumer).tear_down
         end
+        get_base(consumer).tear_down
+        get_base.tear_down
       end
 
       def get_provider_state provider_state_name, consumer
         Pact.world.provider_states.get(provider_state_name, :for => consumer)
+      end
+
+      def get_base consumer = nil
+        Pact.world.provider_states.get_base(:for => consumer)
       end
     end
   end

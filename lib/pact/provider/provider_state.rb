@@ -4,9 +4,15 @@ require 'pact/provider/provider_state_configured_modules'
 module Pact
   module Provider
 
+    BASE_PROVIDER_STATE_NAME = "__base_provider_state_name__"
+
     module DSL
       def provider_state name, &block
         ProviderStates.provider_state(name, &block).register
+      end
+
+      def base_provider_state &block
+        ProviderStates.provider_state(BASE_PROVIDER_STATE_NAME, &block).register
       end
 
       def provider_states_for name, &block
@@ -36,6 +42,10 @@ module Pact
       def self.get name, options = {}
         fullname = options[:for] ? "#{options[:for]}.#{name}" : name
         (provider_states[fullname] || provider_states[fullname.to_sym]) || provider_states[name]
+      end
+
+      def self.get_base options = {}
+        get(BASE_PROVIDER_STATE_NAME, options) || NoOpProviderState
       end
     end
 
@@ -129,6 +139,18 @@ module Pact
           "#{namespace}.#{name}"
         end
       end
+    end
+
+    class NoOpProviderState
+
+      def self.set_up
+
+      end
+
+      def self.tear_down
+
+      end
+
     end
   end
 end
