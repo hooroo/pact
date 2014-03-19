@@ -1,5 +1,5 @@
 module Pact
-  module Provider
+  module Provider::State
     class ProviderStateManager
 
       attr_reader :provider_state_name, :consumer

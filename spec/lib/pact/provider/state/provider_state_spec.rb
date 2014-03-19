@@ -1,8 +1,8 @@
 require 'spec_helper'
-require 'pact/provider/provider_state'
+require 'pact/provider/state/provider_state'
 
 module Pact
-  module Provider
+  module Provider::State
 
     describe ProviderStates do
       MESSAGES = []

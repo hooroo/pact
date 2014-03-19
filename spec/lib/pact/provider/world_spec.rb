@@ -28,7 +28,7 @@ module Pact
       subject { World.new }
       describe "provider_states" do
         it "returns a provider state proxy" do
-          expect(subject.provider_states).to be_instance_of ProviderStateProxy
+          expect(subject.provider_states).to be_instance_of State::ProviderStateProxy
         end
         it "returns the same object each time" do
           expect(subject.provider_states).to be subject.provider_states

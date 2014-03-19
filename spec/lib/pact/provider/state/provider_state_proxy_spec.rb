@@ -1,8 +1,8 @@
 require 'spec_helper'
-require 'pact/provider/provider_state_proxy'
+require 'pact/provider/state/provider_state_proxy'
 
 module Pact
-  module Provider
+  module Provider::State
     describe ProviderStateProxy do
 
       let(:provider_state_proxy) { ProviderStateProxy.new }

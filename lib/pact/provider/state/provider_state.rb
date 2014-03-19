@@ -1,8 +1,8 @@
 require 'pact/shared/dsl'
-require 'pact/provider/provider_state_configured_modules'
+require 'pact/provider/state/provider_state_configured_modules'
 
 module Pact
-  module Provider
+  module Provider::State
 
     BASE_PROVIDER_STATE_NAME = "__base_provider_state__"
 

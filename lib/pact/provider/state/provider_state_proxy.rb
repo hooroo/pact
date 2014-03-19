@@ -1,5 +1,5 @@
 module Pact
-  module Provider
+  module Provider::State
     class ProviderStateProxy
 
       attr_reader :missing_provider_states

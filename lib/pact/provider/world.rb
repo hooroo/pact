@@ -16,7 +16,7 @@ module Pact
       end
 
       def provider_states
-        @provider_states_proxy ||= Pact::Provider::ProviderStateProxy.new
+        @provider_states_proxy ||= Pact::Provider::State::ProviderStateProxy.new
       end
 
     end

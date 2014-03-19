@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'pact/provider/provider_state_manager'
+require 'pact/provider/state/provider_state_manager'
 
-module Pact::Provider
+module Pact::Provider::State
 
 
   describe ProviderStateManager do
