@@ -1,3 +1,5 @@
+require 'pact/provider/state/provider_state_proxy'
+
 module Pact
 
   def self.world
@@ -11,9 +13,6 @@ module Pact
 
   module Provider
     class World
-
-      def initialize
-      end
 
       def provider_states
         @provider_states_proxy ||= Pact::Provider::State::ProviderStateProxy.new
