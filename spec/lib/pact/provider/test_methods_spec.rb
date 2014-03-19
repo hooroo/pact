@@ -13,25 +13,21 @@ module Pact::Provider
       PROVIDER_STATE_MESSAGES.clear
       Pact.clear_world
 
-      Pact.base_provider_state do
-        set_up do
-          PROVIDER_STATE_MESSAGES << :global_base_set_up
-        end
+      Pact.set_up do
+        PROVIDER_STATE_MESSAGES << :global_base_set_up
+      end
 
-        tear_down do
-          PROVIDER_STATE_MESSAGES << :global_base_tear_down
-        end
+      Pact.tear_down do
+        PROVIDER_STATE_MESSAGES << :global_base_tear_down
       end
 
       Pact.provider_states_for "a consumer with provider states" do
-        base_provider_state do
-          set_up do
-            PROVIDER_STATE_MESSAGES << :consumer_base_set_up
-          end
+        set_up do
+          PROVIDER_STATE_MESSAGES << :consumer_base_set_up
+        end
 
-          tear_down do
-            PROVIDER_STATE_MESSAGES << :consumer_base_tear_down
-          end
+        tear_down do
+          PROVIDER_STATE_MESSAGES << :consumer_base_tear_down
         end
 
         provider_state "a custom state" do

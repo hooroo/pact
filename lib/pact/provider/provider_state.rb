@@ -4,15 +4,19 @@ require 'pact/provider/provider_state_configured_modules'
 module Pact
   module Provider
 
-    BASE_PROVIDER_STATE_NAME = "__base_provider_state_name__"
+    BASE_PROVIDER_STATE_NAME = "__base_provider_state__"
 
     module DSL
       def provider_state name, &block
         ProviderStates.provider_state(name, &block).register
       end
 
-      def base_provider_state &block
-        ProviderStates.provider_state(BASE_PROVIDER_STATE_NAME, &block).register
+      def set_up &block
+        ProviderStates.base_provider_state.register.register_set_up &block
+      end
+
+      def tear_down &block
+        ProviderStates.base_provider_state.register_tear_down &block
       end
 
       def provider_states_for name, &block
@@ -25,6 +29,12 @@ module Pact
     class ProviderStates
       def self.provider_state name, &block
         ProviderState.build(name, current_namespaces.join('.'), &block)
+      end
+
+      def self.base_provider_state
+        fullname = namespaced_name BASE_PROVIDER_STATE_NAME, {:for => current_namespaces.first }
+        provider_states[fullname] ||
+          ProviderState.new(BASE_PROVIDER_STATE_NAME, current_namespaces.join('.'))
       end
 
       def self.register name, provider_state
@@ -40,12 +50,17 @@ module Pact
       end
 
       def self.get name, options = {}
-        fullname = options[:for] ? "#{options[:for]}.#{name}" : name
-        (provider_states[fullname] || provider_states[fullname.to_sym]) || provider_states[name]
+        fullname = namespaced_name name, options
+        (provider_states[fullname] || provider_states[fullname.to_sym] || provider_states[name])
       end
 
-      def self.get_base options = {}
-        get(BASE_PROVIDER_STATE_NAME, options) || NoOpProviderState
+      def self.get_base opts = {}
+        fullname = namespaced_name BASE_PROVIDER_STATE_NAME, opts
+        provider_states[fullname] || NoOpProviderState
+      end
+
+      def self.namespaced_name name, options = {}
+        fullname = options[:for] ? "#{options[:for]}.#{name}" : name
       end
     end
 
@@ -82,6 +97,7 @@ module Pact
 
       def register
         ProviderStates.register(namespaced(name), self)
+        self
       end
 
       def finalize

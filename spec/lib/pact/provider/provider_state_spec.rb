@@ -143,10 +143,8 @@ module Pact
 
       describe "base_provider_state" do
         Pact.provider_states_for "a consumer with base state" do
-          base_provider_state do
-            set_up do
-              MESSAGES << "setting up base provider state"
-            end
+          set_up do
+            MESSAGES << "setting up base provider state"
           end
         end
 
@@ -170,10 +168,8 @@ module Pact
       describe "global base_provider_state" do
 
         before(:all) do
-          Pact.base_provider_state do
-            set_up do
-              MESSAGES << "setting up global base provider state"
-            end
+          Pact.set_up do
+            MESSAGES << "setting up global base provider state"
           end
         end
 
