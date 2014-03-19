@@ -5,6 +5,7 @@ require 'pact/provider/provider_state'
 require 'pact/provider/provider_state_proxy'
 require 'pact/provider/request'
 require 'pact/provider/world'
+require 'pact/provider/provider_state_manager'
 
 module Pact
   module Provider
@@ -34,28 +35,13 @@ module Pact
       end
 
       def set_up_provider_state provider_state_name, consumer
-        get_base_provider_state.set_up
-        get_base_provider_state(consumer).set_up
-        if provider_state_name
-          get_provider_state(provider_state_name, consumer).set_up
-        end
+        ProviderStateManager.new(provider_state_name, consumer).set_up_provider_state
       end
 
       def tear_down_provider_state provider_state_name, consumer
-        if provider_state_name
-          get_provider_state(provider_state_name, consumer).tear_down
-        end
-        get_base_provider_state(consumer).tear_down
-        get_base_provider_state.tear_down
+        ProviderStateManager.new(provider_state_name, consumer).tear_down_provider_state
       end
 
-      def get_provider_state provider_state_name, consumer
-        Pact.world.provider_states.get(provider_state_name, :for => consumer)
-      end
-
-      def get_base_provider_state consumer = nil
-        Pact.world.provider_states.get_base(:for => consumer)
-      end
     end
   end
 end

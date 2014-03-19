@@ -1,11 +1,10 @@
 require 'spec_helper'
+require 'pact/provider/provider_state_manager'
 
 module Pact::Provider
 
 
-  describe TestMethods do
-
-    include TestMethods
+  describe ProviderStateManager do
 
     PROVIDER_STATE_MESSAGES = []
 
@@ -43,9 +42,11 @@ module Pact::Provider
       end
     end
 
+    let(:provider_state_manager) { ProviderStateManager.new("a custom state", "a consumer with provider states") }
+
     describe "set_up_provider_state" do
 
-      subject { set_up_provider_state "a custom state", "a consumer with provider states" }
+      subject { provider_state_manager.set_up_provider_state }
 
       it "sets up the global base state" do
         subject
@@ -65,7 +66,7 @@ module Pact::Provider
 
     describe "tear_down_provider_state" do
 
-      subject { tear_down_provider_state "a custom state", "a consumer with provider states" }
+      subject { provider_state_manager.tear_down_provider_state }
 
       it "tears down the consumer custom state" do
         subject
