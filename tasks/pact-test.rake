@@ -20,6 +20,10 @@ Pact::VerificationTask.new(:term) do | pact |
 	pact.uri './spec/support/term.json'
 end
 
+Pact::VerificationTask.new(:case_insensitive_response_header_matching) do | pact |
+	pact.uri './spec/support/case-insensitive-response-header-matching.json', :pact_helper => './spec/support/case-insensitive-response-header-matching.rb'
+end
+
 RSpec::Core::RakeTask.new('spec:standalone:fail') do | task |
 	task.pattern = FileList["spec/standalone/**/*_fail_test.rb"]
 end
@@ -31,7 +35,7 @@ end
 namespace :pact do
 
 	desc 'Runs pact tests against a sample application, testing failure and success.'
-	task :tests => ['pact:verify:stubbing','pact:verify:stubbing_using_allow'] do
+	task :tests => ['pact:verify:stubbing','pact:verify:stubbing_using_allow', 'pact:verify:case_insensitive_response_header_matching', 'spec:standalone:pass'] do
 
 		require 'pact/provider/pact_spec_runner'
 		require 'open3'
