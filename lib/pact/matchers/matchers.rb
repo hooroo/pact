@@ -43,7 +43,7 @@ module Pact
     alias_method :structure_diff, :type_diff # Backwards compatibility
 
     def regexp_diff regexp, actual, options
-      if actual.is_a?(String) && regexp.match(actual)
+      if (actual.is_a?(String) || actual.is_a?(Numeric)) && regexp.match(actual.to_s)
         {}
       else
         RegexpDifference.new regexp, actual
