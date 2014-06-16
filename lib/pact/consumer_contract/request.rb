@@ -59,13 +59,17 @@ module Pact
       def body_difference(actual_body)
         return {} if body.is_a? NullExpectation
 
-        diff({:body => body}, {body: actual_body}, allow_unexpected_keys: runtime_options[:allow_unexpected_keys_in_body])
+        diff({body: body}, {body: actual_body}, allow_unexpected_keys: runtime_options[:allow_unexpected_keys_in_body])
       end
 
       def query_difference(actual_query)
         return {} if query.is_a? NullExpectation
 
-        diff({:query => query}, {query: actual_query})
+        if query.is_a?(String)
+          diff({query: CGI.parse(query)}, {query: CGI.parse(actual_query)})
+        else
+          diff({query: query}, {query: actual_query})
+        end
       end
     end
 
