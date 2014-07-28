@@ -54,9 +54,8 @@ module Pact
         raise NotImplementedError
       end
 
-      def to_hash_without(*reject_keys)
-        request_keys = [:method, :path, :headers, :query, :body]
-        keep_keys = request_keys - reject_keys
+      def to_hash_without_body
+        keep_keys = [:method, :path, :headers, :query]
         as_json.reject{ |key, value| !keep_keys.include? key }
       end
 
