@@ -65,8 +65,8 @@ module Pact
       def query_difference(actual_query)
         return {} if query.is_a? NullExpectation
 
-        if query.is_a?(Hash)
-          diff({query: Pact::HashQuery.new(query)}, {query: actual_query})
+        if query.is_a?(String)
+          diff({query: CGI.parse(query)}, {query: CGI.parse(actual_query)})
         else
           diff({query: query}, {query: actual_query})
         end

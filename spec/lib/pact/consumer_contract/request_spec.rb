@@ -235,7 +235,6 @@ module Pact
             expect(subject.matches? actual_request).to be false
           end
         end
-
         context "when the expected body contains non-matching hash where one field contains a substring of the other" do
             let(:expected_body) do
               {
@@ -311,11 +310,11 @@ module Pact
           end
         end
 
-        context 'when the expected query is a hash' do
-          let(:expected_query) { {first: 'one', second: 'two'} }
-          let(:actual_query) { 'second=two&first=one' }
+        context 'when the queries are identical with a different keys order' do
+          let(:expected_query) { 'foo&bar' }
+          let(:actual_query) { 'bar&foo' }
 
-          it 'matches regardless of order' do
+          it 'matches' do
             expect(subject.matches? actual_request).to be true
           end
         end

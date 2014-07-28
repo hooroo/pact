@@ -1,7 +1,6 @@
 require 'awesome_print'
 require 'pact/term'
 require 'pact/something_like'
-require 'pact/hash_query'
 require 'pact/shared/null_expectation'
 require 'pact/shared/key_not_found'
 require 'pact/matchers/unexpected_key'
